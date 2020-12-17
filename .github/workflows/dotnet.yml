@@ -14,6 +14,9 @@ jobs:
     services:
       mongodb:
         image: mongo
+        env:
+          MONGO_INITDB_ROOT_USERNAME: mongodb
+          MONGO_INITDB_ROOT_PASSWORD: mongodb
         ports:
           - 27017:27017
     steps:
