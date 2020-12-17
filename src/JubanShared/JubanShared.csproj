@@ -28,6 +28,5 @@
     <PackageReference Include="xunit" Version="2.4.1" />
     <PackageReference Include="zji.lz4.core" Version="1.0.0" />
     <PackageReference Include="zji.murmurhash.core" Version="1.0.0" />
-    <AdditionalFiles Include="stylecop.json" />
   </ItemGroup>
 </Project>
