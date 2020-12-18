@@ -56,5 +56,5 @@ jobs:
         dotnet pack -c $PackConfiguration $PROJECT_PATH$PROJECT_FILE
         dotnet nuget push ${PROJECT_PATH}bin/$PackConfiguration/*.nupkg -k $NUGET_KEY -s https://api.nuget.org/v3/index.json
     - name: Publish code coverage
-        run: |
-          git clone git@github.com:jubanlabs/code-coverage.git
+      run: |
+        git clone git@github.com:jubanlabs/code-coverage.git
