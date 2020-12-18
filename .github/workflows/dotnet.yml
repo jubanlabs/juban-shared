@@ -64,8 +64,9 @@ jobs:
       run: |
         cp -r coverage-html pages
         cd pages
-        rm coverage || true
+        rm coverage -rf || true
         mv coverage-html coverage
+        echo '{"schemaVersion": 1,"label": "coverage","message": "84","color": "orange"}' > badge.txt
         git config user.name github-actions
         git config user.email github-actions@github.com
         git add .
