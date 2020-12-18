@@ -1,0 +1,24 @@
+﻿Summary
+  Generated on: 12/18/2020 - 5:40:29 PM
+  Parser: CoberturaParser
+  Assemblies: 1
+  Classes: 11
+  Files: 11
+  Line coverage: 96.1%
+  Covered lines: 175
+  Uncovered lines: 7
+  Coverable lines: 182
+  Total lines: 403
+
+JubanShared                                                    96.1%
+  Jubanlabs.JubanShared.Common.AppSession                      93.7%
+  Jubanlabs.JubanShared.Common.CommonHelper                    91.3%
+  Jubanlabs.JubanShared.Common.ConditionalStopwatch           100.0%
+  Jubanlabs.JubanShared.Common.Config.AppSettings              92.3%
+  Jubanlabs.JubanShared.Common.TransformEnvironmentVariables  100.0%
+  Jubanlabs.JubanShared.Mongodb.Databases.TestDatabase        100.0%
+  Jubanlabs.JubanShared.Mongodb.MgDatabase                    100.0%
+  Jubanlabs.JubanShared.Mongodb.MongoClientContainer          100.0%
+  Jubanlabs.JubanShared.UnitTest.BaseFixture                  100.0%
+  Jubanlabs.JubanShared.UnitTest.LoggingHelper                100.0%
+  Jubanlabs.JubanShared.UnitTest.XUnitTarget                  100.0%
