@@ -67,7 +67,7 @@ jobs:
         rm coverage -rf || true
         mv coverage-html coverage
         C_RAGE=`grep 'Line coverage' ../coverage/Summary.txt| sed -r 's/Line coverage: (.*)/\1/'`
-        echo "{\"schemaVersion\": 1,\"label\": \"coverage\",\"message\": \"$abc\",\"color\": \"orange\"}" > coverage/badge.txt
+        echo "{\"schemaVersion\": 1,\"label\": \"coverage\",\"message\": \"$C_RAGE\",\"color\": \"orange\"}" > coverage/badge.txt
         git config user.name github-actions
         git config user.email github-actions@github.com
         git add .
