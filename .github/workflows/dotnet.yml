@@ -33,10 +33,10 @@ jobs:
     - name: bump version
       run: |
         echo $GITHUB_REF
-        if [ "$GITHUB_REF" == "stable" ]; then ALPHA=""; else ALPHA="-alpha.$CI_PIPELINE_IID"; fi
+        if [ "$GITHUB_REF" == "stable" ]; then ALPHA=""; else ALPHA="-alpha.$GITHUB_RUN_NUMBER"; fi
         if [ "$GITHUB_REF" == "stable" ]; then PackConfiguration="Release"; else PackConfiguration="Debug"; fi
         sed -i "s/<\/Version/$ALPHA<\/Version/" $PROJECT_PATH$PROJECT_FILE
-        sed -i "s/<\/AssemblyVersion/.$CI_PIPELINE_IID<\/AssemblyVersion/" $PROJECT_PATH$PROJECT_FILE
+        sed -i "s/<\/AssemblyVersion/.$GITHUB_RUN_NUMBER<\/AssemblyVersion/" $PROJECT_PATH$PROJECT_FILE
     - name: Restore dependencies
       run: dotnet restore
     - name: Build
