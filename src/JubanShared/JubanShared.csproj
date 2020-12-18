@@ -6,7 +6,6 @@
      <AssemblyVersion>0.2.1</AssemblyVersion>
     <Version>0.2.1</Version>
     <Authors>zji</Authors>
-    <Company>jubanlabs</Company>
     <IsTestProject>false</IsTestProject>
   </PropertyGroup>
   <ItemGroup>
