@@ -42,7 +42,12 @@ jobs:
     - name: Build
       run: dotnet build --no-restore
     - name: Test
-      run: dotnet test --no-build --verbosity normal
+      run: |
+        dotnet list . package
+        dotnet tool install -g dotnet-reportgenerator-globaltool || true
+        dotnet test -v n --collect:"XPlat Code Coverage" --no-build 
+        find . -name "coverage.cobertura.xml" -exec ~/.dotnet/tools/reportgenerator -reports:'{}' -targetdir:/coverage -reporttypes:TextSummary \; -exec cat /Job_$CI_JOB_ID/coverage/Summary.txt \;
+        find . -name "coverage.cobertura.xml" -exec ~/.dotnet/tools/reportgenerator -reports:'{}' -targetdir:/coverage-html -reporttypes:HtmlInline_AzurePipelines \; 
     - name: Publish
       env: 
         NUGET_KEY: ${{ secrets.NUGET_KEY }}
