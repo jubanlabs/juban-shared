@@ -35,7 +35,6 @@ jobs:
         pwd
         echo $GITHUB_REF
         if [ "$GITHUB_REF" == "stable" ]; then ALPHA=""; else ALPHA="-alpha.$GITHUB_RUN_NUMBER"; fi
-        if [ "$GITHUB_REF" == "stable" ]; then PackConfiguration="Release"; else PackConfiguration="Debug"; fi
         sed -i "s/<\/Version/$ALPHA<\/Version/" $PROJECT_PATH$PROJECT_FILE
         sed -i "s/<\/AssemblyVersion/.$GITHUB_RUN_NUMBER<\/AssemblyVersion/" $PROJECT_PATH$PROJECT_FILE
     - name: Restore dependencies
@@ -48,5 +47,6 @@ jobs:
       env: 
         NUGET_KEY: ${{ secrets.NUGET_KEY }}
       run: |
+        if [ "$GITHUB_REF" == "stable" ]; then PackConfiguration="Release"; else PackConfiguration="Debug"; fi
         dotnet pack -c $PackConfiguration $PROJECT_PATH$PROJECT_FILE
         dotnet nuget push ${PROJECT_PATH}bin/$PackConfiguration/*.nupkg -k $NUGET_KEY
