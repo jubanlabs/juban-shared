@@ -55,3 +55,6 @@ jobs:
         if [ "$GITHUB_REF" == "stable" ]; then PackConfiguration="Release"; else PackConfiguration="Debug"; fi
         dotnet pack -c $PackConfiguration $PROJECT_PATH$PROJECT_FILE
         dotnet nuget push ${PROJECT_PATH}bin/$PackConfiguration/*.nupkg -k $NUGET_KEY -s https://api.nuget.org/v3/index.json
+    - name: Publish code coverage
+        run: |
+          git clone git@github.com:jubanlabs/code-coverage.git
