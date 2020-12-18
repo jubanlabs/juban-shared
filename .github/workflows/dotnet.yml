@@ -55,15 +55,15 @@ jobs:
         if [ "$GITHUB_REF" == "stable" ]; then PackConfiguration="Release"; else PackConfiguration="Debug"; fi
         dotnet pack -c $PackConfiguration $PROJECT_PATH$PROJECT_FILE
         dotnet nuget push ${PROJECT_PATH}bin/$PackConfiguration/*.nupkg -k $NUGET_KEY -s https://api.nuget.org/v3/index.json
-    - name: Checkout codecoverage
+    - name: Checkout static site
       uses: actions/checkout@v2
       with:
-        ref: codecoverage
-        path: codecoverage
+        ref: pages
+        path: pages
     - name: upload codecoverage
       run: |
-        cp -r coverage-html codecoverage
-        cd codecoverage
+        cp -r coverage-html pages
+        cd pages
         rm coverage || true
         mv coverage-html coverage
         git config user.name github-actions
