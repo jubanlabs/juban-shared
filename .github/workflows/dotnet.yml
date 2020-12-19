@@ -40,7 +40,6 @@ jobs:
         echo $IS_RELEASE_TAG
         if [ "$IS_RELEASE_TAG" == "true" ]; then ALPHA=""; else ALPHA="-alpha.$GITHUB_RUN_NUMBER"; fi
         sed -i "s/<\/Version/$ALPHA<\/Version/" $PROJECT_PATH$PROJECT_FILE
-        
     - name: Restore dependencies
       run: dotnet restore
     - name: Build
