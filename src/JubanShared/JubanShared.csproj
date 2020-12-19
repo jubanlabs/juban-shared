@@ -3,8 +3,8 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.1</TargetFramework>
      <PackageId>Jubanlabs.JubanShared</PackageId>
-     <AssemblyVersion>0.2.1</AssemblyVersion>
-    <Version>0.2.1</Version>
+     <AssemblyVersion>0.2.2</AssemblyVersion>
+    <Version>0.2.2</Version>
     <Authors>zji</Authors>
     <IsTestProject>false</IsTestProject>
   </PropertyGroup>
