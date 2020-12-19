@@ -33,7 +33,9 @@ jobs:
     - name: bump version
       run: |
         pwd
-        echo ${{ github.ref }}
+        echo ${{ startsWith(github.ref,'refs/tags/v') }}
+        IS_RELEASE_TAG=${{ startsWith(github.ref,'refs/tags/v') }}
+        echo $IS_RELEASE_TAG
         if [ "$GITHUB_REF" == "stable" ]; then ALPHA=""; else ALPHA="-alpha.$GITHUB_RUN_NUMBER"; fi
         sed -i "s/<\/Version/$ALPHA<\/Version/" $PROJECT_PATH$PROJECT_FILE
         #sed -i "s/<\/AssemblyVersion/.$GITHUB_RUN_NUMBER<\/AssemblyVersion/" $PROJECT_PATH$PROJECT_FILE
