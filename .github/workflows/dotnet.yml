@@ -68,7 +68,7 @@ jobs:
     - name: upload codecoverage
       run: |
         mkdir -p pages/$GITHUB_REPOSITORY/$GITHUB_RUN_NUMBER
-        cp -r coverage-html/ pages/$GITHUB_REPOSITORY/$GITHUB_RUN_NUMBER
+        cp -r coverage-html/* pages/$GITHUB_REPOSITORY/$GITHUB_RUN_NUMBER
         cd pages
         C_RAGE=`grep 'Line coverage' ../coverage/Summary.txt| sed -r 's/Line coverage: (.*)/\1/'`
         echo "{\"schemaVersion\": 1,\"label\": \"coverage\",\"message\": \"$C_RAGE\",\"color\": \"orange\"}" > $GITHUB_REPOSITORY/badge.txt
