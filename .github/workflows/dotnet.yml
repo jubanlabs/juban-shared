@@ -64,6 +64,7 @@ jobs:
         repository: jubanlabs/code-coverage
         ref: main
         path: pages
+        token: ${{ secrets.PAT_PUB_REPO }}
     - name: upload codecoverage
       run: |
         mkdir -p pages/$GITHUB_REPOSITORY/$GITHUB_RUN_NUMBER
