@@ -61,18 +61,18 @@ jobs:
     - name: Checkout static site
       uses: actions/checkout@v2
       with:
-        ref: pages
+        repository: jubanlabs/code-coverage
+        ref: main
         path: pages
     - name: upload codecoverage
       run: |
-        cp -r coverage-html pages
+        mkdir -p pages/$GITHUB_REPOSITORY/$GITHUB_RUN_NUMBER
+        cp -r coverage-html/ pages/$GITHUB_REPOSITORY/$GITHUB_RUN_NUMBER
         cd pages
-        rm coverage -rf || true
-        mv coverage-html coverage
         C_RAGE=`grep 'Line coverage' ../coverage/Summary.txt| sed -r 's/Line coverage: (.*)/\1/'`
-        echo "{\"schemaVersion\": 1,\"label\": \"coverage\",\"message\": \"$C_RAGE\",\"color\": \"orange\"}" > coverage/badge.txt
+        echo "{\"schemaVersion\": 1,\"label\": \"coverage\",\"message\": \"$C_RAGE\",\"color\": \"orange\"}" > $GITHUB_REPOSITORY/badge.txt
         git config user.name github-actions
         git config user.email github-actions@github.com
         git add .
-        git commit -m "codecoverage"
+        git commit -m "codecoverage for $GITHUB_REPOSITORY #$GITHUB_RUN_NUMBER"
         git push
