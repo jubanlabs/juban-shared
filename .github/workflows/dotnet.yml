@@ -16,7 +16,8 @@ env:
 jobs:
   build:
 
-    container: ubuntu-latest
+    runs-on: ubuntu-latest
+    container: ubuntu:latest
     
     services:
       mongodb:
