@@ -67,8 +67,6 @@ jobs:
         token: ${{ secrets.PAT_PUB_REPO }}
     - name: upload codecoverage
       run: |
-        pwd
-        ls -l pages
         mkdir -p pages/$GITHUB_REPOSITORY/$GITHUB_RUN_NUMBER
         cp -r coverage-html/* pages/$GITHUB_REPOSITORY/$GITHUB_RUN_NUMBER
         cd pages
@@ -76,6 +74,8 @@ jobs:
         echo "{\"schemaVersion\": 1,\"label\": \"coverage\",\"message\": \"$C_RAGE\",\"color\": \"orange\"}" > $GITHUB_REPOSITORY/badge.txt
         git config user.name github-actions
         git config user.email github-actions@github.com
+        ls -al
+        git status
         git add .
         git commit -m "codecoverage for $GITHUB_REPOSITORY #$GITHUB_RUN_NUMBER"
         git push
