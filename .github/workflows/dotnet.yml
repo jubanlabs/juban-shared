@@ -75,7 +75,6 @@ jobs:
         ls -al
         git config user.name github-actions
         git config user.email github-actions@github.com
-        git status
         git add .
         git commit -m "codecoverage for $GITHUB_REPOSITORY #$GITHUB_RUN_NUMBER"
         git push
