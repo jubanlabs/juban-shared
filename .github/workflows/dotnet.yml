@@ -32,43 +32,58 @@ jobs:
       uses: actions/setup-dotnet@v1
       with:
         dotnet-version: 3.1.301
-    - name: prepare
+    - name: prepare variables for release
+      if: ${{ startsWith(github.ref,'refs/tags/v') }}
+      run: |
+        ALPHA=""
+        PackConfiguration="Release"
+
+    - name: prepare variables for pre-release
+      if: ${{ !startsWith(github.ref,'refs/tags/v') }}
+      run: |
+        ALPHA="-alpha.$GITHUB_RUN_NUMBER"
+        PackConfiguration="Debug"
+
+    - name: update version & add github nuget souce
       run: |
         pwd
-        echo ${{ startsWith(github.ref,'refs/tags/v') }}
-        IS_RELEASE_TAG=${{ startsWith(github.ref,'refs/tags/v') }}
-        echo $IS_RELEASE_TAG
-        if [ "$IS_RELEASE_TAG" == "true" ]; then ALPHA=""; else ALPHA="-alpha.$GITHUB_RUN_NUMBER"; fi
         sed -i "s/<\/Version/$ALPHA<\/Version/" $PROJECT_PATH$PROJECT_FILE
         dotnet nuget add source https://nuget.pkg.github.com/jubanlabs/index.json -n github -u zefeiji -p ${{ secrets.GITHUB_TOKEN }} --store-password-in-clear-text
+
     - name: Restore dependencies
       run: dotnet restore
-    - name: Build
+
+    - name: build
       run: dotnet build --no-restore
-    - name: Test
+
+    - name: test
       run: |
         dotnet list . package
         dotnet tool install -g dotnet-reportgenerator-globaltool || true
         dotnet test -v n --collect:"XPlat Code Coverage" --no-build 
         find . -name "coverage.cobertura.xml" -exec ~/.dotnet/tools/reportgenerator -reports:'{}' -targetdir:coverage -reporttypes:TextSummary \; -exec cat coverage/Summary.txt \;
         find . -name "coverage.cobertura.xml" -exec ~/.dotnet/tools/reportgenerator -reports:'{}' -targetdir:coverage-html -reporttypes:HtmlInline_AzurePipelines \; 
-    - name: Publish
+
+    - name: pack
+      run: dotnet pack -c $PackConfiguration $PROJECT_PATH$PROJECT_FILE
+        
+    - name: publish to nuget
+      if: ${{ startsWith(github.ref,'refs/tags/v') }}
       env: 
-        NUGET_KEY: ${{ secrets.NUGET_KEY }}
-      run: |
-        if [ "$IS_RELEASE_TAG" == "true" ]; then PackConfiguration="Release"; else PackConfiguration="Debug"; fi
-        dotnet pack -c $PackConfiguration $PROJECT_PATH$PROJECT_FILE
-        #publish to github packages
-        dotnet nuget push ${PROJECT_PATH}bin/$PackConfiguration/*.nupkg --source "github"
-        #if it is release, publish to nuget as well.
-        if [ "$IS_RELEASE_TAG" == "true" ]; then dotnet nuget push ${PROJECT_PATH}bin/$PackConfiguration/*.nupkg -k $NUGET_KEY -s https://api.nuget.org/v3/index.json ; fi
-    - name: Checkout static site
+        NUGET_KEY: ${{ secrets.NUGET_KEY }}    
+      run: dotnet nuget push ${PROJECT_PATH}bin/$PackConfiguration/*.nupkg -k $NUGET_KEY -s https://api.nuget.org/v3/index.json
+
+    - name: publish to github
+      run: dotnet nuget push ${PROJECT_PATH}bin/$PackConfiguration/*.nupkg -k ${{ secrets.GITHUB_TOKEN }} --source "github"
+        
+    - name: checkout code-coverage site
       uses: actions/checkout@v2
       with:
         repository: jubanlabs/code-coverage
         ref: main
         path: pages
         token: ${{ secrets.PAT_PUB_REPO }}
+
     - name: upload codecoverage
       run: |
         mkdir -p pages/$GITHUB_REPOSITORY/$GITHUB_RUN_NUMBER
