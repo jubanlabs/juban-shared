@@ -61,7 +61,7 @@ jobs:
         #publish to github packages
         dotnet nuget push ${PROJECT_PATH}bin/$PackConfiguration/*.nupkg --source "github"
         #if it is release, publish to nuget as well.
-        if [ "$IS_RELEASE_TAG" == "true" ]; then dotnet nuget push ${PROJECT_PATH}bin/$PackConfiguration/*.nupkg -k $NUGET_KEY -s https://api.nuget.org/v3/index.json; fi
+        if [ "$IS_RELEASE_TAG" == "true" ]; then dotnet nuget push ${PROJECT_PATH}bin/$PackConfiguration/*.nupkg -k $NUGET_KEY -s https://api.nuget.org/v3/index.json ; fi
     - name: Checkout static site
       uses: actions/checkout@v2
       with:
