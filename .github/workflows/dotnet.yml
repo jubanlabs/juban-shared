@@ -40,7 +40,7 @@ jobs:
         echo $IS_RELEASE_TAG
         if [ "$IS_RELEASE_TAG" == "true" ]; then ALPHA=""; else ALPHA="-alpha.$GITHUB_RUN_NUMBER"; fi
         sed -i "s/<\/Version/$ALPHA<\/Version/" $PROJECT_PATH$PROJECT_FILE
-        dotnet nuget add source https://nuget.pkg.github.com/jubanlabs/index.json -n github -u zefeiji -p ${{ secrets.GITHUB_TOKEN }} || true
+        dotnet nuget add source https://nuget.pkg.github.com/jubanlabs/index.json -n github -u zefeiji -p ${{ secrets.GITHUB_TOKEN }} --store-password-in-clear-text
     - name: Restore dependencies
       run: dotnet restore
     - name: Build
