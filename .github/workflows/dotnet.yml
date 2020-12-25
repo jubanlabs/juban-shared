@@ -58,8 +58,10 @@ jobs:
       run: |
         if [ "$IS_RELEASE_TAG" == "true" ]; then PackConfiguration="Release"; else PackConfiguration="Debug"; fi
         dotnet pack -c $PackConfiguration $PROJECT_PATH$PROJECT_FILE
-        #dotnet nuget push ${PROJECT_PATH}bin/$PackConfiguration/*.nupkg -k $NUGET_KEY -s https://api.nuget.org/v3/index.json
+        #publish to github packages
         dotnet nuget push ${PROJECT_PATH}bin/$PackConfiguration/*.nupkg --source "github"
+        #if it is release, publish to nuget as well.
+        if [ "$IS_RELEASE_TAG" == "true" ]; then dotnet nuget push ${PROJECT_PATH}bin/$PackConfiguration/*.nupkg -k $NUGET_KEY -s https://api.nuget.org/v3/index.json; fi
     - name: Checkout static site
       uses: actions/checkout@v2
       with:
