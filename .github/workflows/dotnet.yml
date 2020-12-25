@@ -56,7 +56,7 @@ jobs:
       env: 
         NUGET_KEY: ${{ secrets.NUGET_KEY }}
       run: |
-        if [ "$GITHUB_REF" == "stable" ]; then PackConfiguration="Release"; else PackConfiguration="Debug"; fi
+        if [ "$IS_RELEASE_TAG" == "true" ]; then PackConfiguration="Release"; else PackConfiguration="Debug"; fi
         dotnet pack -c $PackConfiguration $PROJECT_PATH$PROJECT_FILE
         #dotnet nuget push ${PROJECT_PATH}bin/$PackConfiguration/*.nupkg -k $NUGET_KEY -s https://api.nuget.org/v3/index.json
         dotnet nuget push ${PROJECT_PATH}bin/$PackConfiguration/*.nupkg --source "github"
@@ -74,7 +74,6 @@ jobs:
         cd pages
         C_RAGE=`grep 'Line coverage' ../coverage/Summary.txt| sed -r 's/Line coverage: (.*)/\1/'`
         echo "{\"schemaVersion\": 1,\"label\": \"coverage\",\"message\": \"$C_RAGE\",\"color\": \"orange\"}" > $GITHUB_REPOSITORY/badge.txt
-        ls -al
         git config user.name github-actions
         git config user.email github-actions@github.com
         git add .
