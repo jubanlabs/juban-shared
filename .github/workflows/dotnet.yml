@@ -32,7 +32,7 @@ jobs:
       uses: actions/setup-dotnet@v1
       with:
         dotnet-version: 3.1.301
-    - name: bump version
+    - name: prepare
       run: |
         pwd
         echo ${{ startsWith(github.ref,'refs/tags/v') }}
@@ -40,6 +40,7 @@ jobs:
         echo $IS_RELEASE_TAG
         if [ "$IS_RELEASE_TAG" == "true" ]; then ALPHA=""; else ALPHA="-alpha.$GITHUB_RUN_NUMBER"; fi
         sed -i "s/<\/Version/$ALPHA<\/Version/" $PROJECT_PATH$PROJECT_FILE
+        dotnet nuget add source https://nuget.pkg.github.com/jubanlabs/index.json -n github -u zefeiji -p ${{ secrets.GITHUB_TOKEN }} || true
     - name: Restore dependencies
       run: dotnet restore
     - name: Build
@@ -57,7 +58,8 @@ jobs:
       run: |
         if [ "$GITHUB_REF" == "stable" ]; then PackConfiguration="Release"; else PackConfiguration="Debug"; fi
         dotnet pack -c $PackConfiguration $PROJECT_PATH$PROJECT_FILE
-        dotnet nuget push ${PROJECT_PATH}bin/$PackConfiguration/*.nupkg -k $NUGET_KEY -s https://api.nuget.org/v3/index.json
+        #dotnet nuget push ${PROJECT_PATH}bin/$PackConfiguration/*.nupkg -k $NUGET_KEY -s https://api.nuget.org/v3/index.json
+        dotnet nuget push ${PROJECT_PATH}bin/$PackConfiguration/*.nupkg --source "github"
     - name: Checkout static site
       uses: actions/checkout@v2
       with:
