@@ -49,6 +49,11 @@
                 str.Substring(0, str.IndexOf(".", StringComparison.Ordinal));
         }
 
+        public bool IsEnvironmentNameSet()
+        {
+            return this.EnvironmentVariables.Keys.Contains("JUBAN_ENVIRONMENT_NAME");
+        }
+
         public string GetEnvironmentName()
         {
             if (!this.EnvironmentVariables.Keys.Contains("JUBAN_ENVIRONMENT_NAME"))
