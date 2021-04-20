@@ -42,7 +42,7 @@ namespace Jubanlabs.JubanShared.Common.Config
             if (extraConfigFolder != null)
             {
                 Logger.ConditionalTrace("loading extra config from " + extraConfigFolder);
-                Logger.ConditionalTrace(File.Exists(Path.Combine(AppSession.Instance.EnvironmentVariables["JUBAN_EXTRA_CONFIG_FOLDER"], $"appsettings.json")));
+                //Logger.ConditionalTrace(File.Exists(Path.Combine(AppSession.Instance.EnvironmentVariables["JUBAN_EXTRA_CONFIG_FOLDER"], $"appsettings.json")));
                 builder.AddJsonFile(Path.Combine(AppSession.Instance.EnvironmentVariables["JUBAN_EXTRA_CONFIG_FOLDER"], $"appsettings.json"), true, false)
                     .AddJsonFile(Path.Combine(AppSession.Instance.EnvironmentVariables["JUBAN_EXTRA_CONFIG_FOLDER"], $"appsettings." + AppSession.Instance.GetEnvironmentName() + ".json"), true, false)
                     .AddJsonFile(Path.Combine(AppSession.Instance.EnvironmentVariables["JUBAN_EXTRA_CONFIG_FOLDER"], $"juban.appsettings.json"), true, false)

@@ -51,7 +51,14 @@
 
         public string GetEnvironmentName()
         {
-            return this.EnvironmentVariables["JUBAN_ENVIRONMENT_NAME"];
+            if (!this.EnvironmentVariables.Keys.Contains("JUBAN_ENVIRONMENT_NAME"))
+            {
+                throw new Exception("environment name not specified.");
+            }
+            else
+            {
+                return this.EnvironmentVariables["JUBAN_ENVIRONMENT_NAME"];
+            }
         }
 
         public void SetEnvironmentName(string env)

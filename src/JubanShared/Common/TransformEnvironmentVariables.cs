@@ -17,10 +17,10 @@
                 envList.TryAdd((string)item, (string)dict[(string)item]);
             }
 
-            if (!envList.Keys.Contains("JUBAN_ENVIRONMENT_NAME"))
-            {
-                envList.TryAdd("JUBAN_ENVIRONMENT_NAME", "testing");
-            }
+            // if (!envList.Keys.Contains("JUBAN_ENVIRONMENT_NAME"))
+            // {
+            //     envList.TryAdd("JUBAN_ENVIRONMENT_NAME", "testing");
+            // }
 
             return envList;
         }
