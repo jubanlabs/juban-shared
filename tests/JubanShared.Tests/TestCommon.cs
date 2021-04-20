@@ -37,17 +37,17 @@ namespace Jubanlabs.JubanShared.Common.Test
             Logger.ConditionalTrace("test logger");
         }
 
-        [Fact]
-        public void TestTransformEnvironmentVariables()
-        {
-            Dictionary<string, string> dict = new Dictionary<string, string>();
-            var newDict = TransformEnvironmentVariables.Load(dict);
-            Assert.Equal("testing", newDict["JUBAN_ENVIRONMENT_NAME"]);
+        // [Fact]
+        // public void TestTransformEnvironmentVariables()
+        // {
+        //     Dictionary<string, string> dict = new Dictionary<string, string>();
+        //     var newDict = TransformEnvironmentVariables.Load(dict);
+        //     Assert.Equal("testing", newDict["JUBAN_ENVIRONMENT_NAME"]);
 
-            dict["JUBAN_ENVIRONMENT_NAME"] = "staging";
-            newDict = TransformEnvironmentVariables.Load(dict);
-            Assert.NotEqual("testing", newDict["JUBAN_ENVIRONMENT_NAME"]);
-        }
+        //     dict["JUBAN_ENVIRONMENT_NAME"] = "staging";
+        //     newDict = TransformEnvironmentVariables.Load(dict);
+        //     Assert.NotEqual("testing", newDict["JUBAN_ENVIRONMENT_NAME"]);
+        // }
 
         [Fact]
         public void TestConditionalStopwatch()
