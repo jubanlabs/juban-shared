@@ -1,6 +1,7 @@
 namespace Jubanlabs.JubanShared.UnitTest
 {
     using System;
+    using Jubanlabs.JubanShared.Common;
 
     public class BaseFixture : IDisposable
     {
