@@ -6,6 +6,7 @@ namespace Jubanlabs.JubanShared.UnitTest
     {
         public BaseFixture()
         {
+            AppSession.Instance.SetEnvironmentName( "testing");
         }
 
         public void Dispose()
