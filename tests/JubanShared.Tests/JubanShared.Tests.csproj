@@ -27,6 +27,6 @@
   <ItemGroup>
     <ProjectReference Include="..\..\src\JubanShared\JubanShared.csproj" />
      <Content Include="appsettings.json" CopyToOutputDirectory="Always" />
-    <Content Include="appsettings.staging.json" CopyToOutputDirectory="Always" />
+    <Content Include="appsettings.testing.json" CopyToOutputDirectory="Always" />
   </ItemGroup>
 </Project>

@@ -22,7 +22,7 @@ namespace Jubanlabs.JubanShared.Common.Test
             var path = Path.GetFullPath(Path.Combine(System.AppContext.BaseDirectory, "../../../extra_config_test"));
 
             Environment.SetEnvironmentVariable("JUBAN_EXTRA_CONFIG_FOLDER", path);
-            AppSession.Instance.SetEnvironmentName("staging");
+            
         }
 
         [Fact]
