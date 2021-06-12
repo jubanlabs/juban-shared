@@ -3,8 +3,9 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <PackageId>Jubanlabs.JubanShared</PackageId>
-    <AssemblyVersion>0.2.4</AssemblyVersion>
-    <Version>0.2.4</Version>
+    <VersionPrefix>0.2.4</VersionPrefix>
+    <VersionSuffix></VersionSuffix>
+    <SourceRevisionId>$([System.DateTime]::UtcNow.ToString("yyyyMMddHHmmss"))</SourceRevisionId>
     <Authors>Zefei Ji</Authors>
     <IsTestProject>false</IsTestProject>
     <LangVersion>8.0</LangVersion>
