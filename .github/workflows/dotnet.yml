@@ -46,6 +46,7 @@ jobs:
 
     - name: update version & add github nuget souce
       run: |
+        dotnet --version
         pwd
         echo $ALPHA
         sed -i "s/<\/VersionSuffix/$ALPHA<\/VersionSuffix/" $PROJECT_PATH$PROJECT_FILE
