@@ -1,5 +1,6 @@
 using Jubanlabs.JubanShared.Logging;
 using Microsoft.Extensions.Logging;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Jubanlabs.JubanShared.Common.Test
 {
@@ -8,14 +9,14 @@ namespace Jubanlabs.JubanShared.Common.Test
     using System.IO;
     using Jubanlabs.JubanShared.Common.Config;
     using Jubanlabs.JubanShared.UnitTest;
-    using Xunit;
-    using Xunit.Abstractions;
 
-    public class TestCommon : IClassFixture<BaseFixture>
+
+    [TestClass]
+    public class TestCommon 
     {
         private static readonly ILogger<TestCommon> Logger =  JubanLogger.GetLogger<TestCommon>();
 
-        public TestCommon(ITestOutputHelper outputHelper)
+        public TestCommon()
         {
            
             Environment.SetEnvironmentVariable("JUBAN_CONFIG", @"{
@@ -28,31 +29,31 @@ namespace Jubanlabs.JubanShared.Common.Test
             
         }
 
-        [Fact]
+        [TestMethod]
         public void TestAppConfig()
         {
-            Assert.Equal("world", AppSettings.Instance.GetValue("hello"));
-            Assert.Null(AppSettings.Instance.GetValue("invalidkey"));
-            Assert.Equal("overrided", AppSettings.Instance.GetValue("hello-to-be-override"));
-            Assert.Equal("word-testing", AppSettings.Instance.GetValue("hello-testing"));
-            Assert.Equal("overrided-env", AppSettings.Instance.GetValue("key-to-be-override-env"));
-            Assert.Equal("overrided-extra-folder", AppSettings.Instance.GetValue("key-to-be-override-extra-folder"));
+            Assert.AreEqual("world", AppSettings.Instance.GetValue("hello"));
+            Assert.IsNull(AppSettings.Instance.GetValue("invalidkey"));
+            Assert.AreEqual("overrided", AppSettings.Instance.GetValue("hello-to-be-override"));
+            Assert.AreEqual("word-testing", AppSettings.Instance.GetValue("hello-testing"));
+            Assert.AreEqual("overrided-env", AppSettings.Instance.GetValue("key-to-be-override-env"));
+            Assert.AreEqual("overrided-extra-folder", AppSettings.Instance.GetValue("key-to-be-override-extra-folder"));
             Logger.LogTrace("test logger");
         }
 
-        // [Fact]
+        // [TestMethod]
         // public void TestTransformEnvironmentVariables()
         // {
         //     Dictionary<string, string> dict = new Dictionary<string, string>();
         //     var newDict = TransformEnvironmentVariables.Load(dict);
-        //     Assert.Equal("testing", newDict["JUBAN_ENVIRONMENT_NAME"]);
+        //     Assert.AreEqual("testing", newDict["JUBAN_ENVIRONMENT_NAME"]);
 
         //     dict["JUBAN_ENVIRONMENT_NAME"] = "staging";
         //     newDict = TransformEnvironmentVariables.Load(dict);
         //     Assert.NotEqual("testing", newDict["JUBAN_ENVIRONMENT_NAME"]);
         // }
 
-        [Fact]
+        [TestMethod]
         public void TestConditionalStopwatch()
         {
             ConditionalStopwatch.PunchIn("t1", "message");
@@ -61,21 +62,28 @@ namespace Jubanlabs.JubanShared.Common.Test
             ConditionalStopwatch.PunchOut("t1");
         }
 
-        [Fact]
+        [TestMethod]
         public void TestCommonHelper()
         {
             var commonHelper = new CommonHelper();
-            Assert.True(commonHelper.GetHash("abc") > 0);
+            Assert.IsTrue(commonHelper.GetHash("abc") > 0);
 
-            Assert.Equal("abc", CommonHelper.UncompressSmallString(CommonHelper.CompressSmallString("abc")));
+            Assert.AreEqual("abc", CommonHelper.UncompressSmallString(CommonHelper.CompressSmallString("abc")));
         }
 
-        [Fact]
+        [TestMethod]
         public void TestStripeHostname()
         {
-            Assert.Equal("ab", AppSession.StripHostName("ab.cd.ef"));
-            Assert.Equal("ab", AppSession.StripHostName("ab.cd"));
-            Assert.Equal("ab", AppSession.StripHostName("ab"));
+            Assert.AreEqual("ab", AppSession.StripHostName("ab.cd.ef"));
+            Assert.AreEqual("ab", AppSession.StripHostName("ab.cd"));
+            Assert.AreEqual("ab", AppSession.StripHostName("ab"));
+        }
+        [TestMethod]
+        public void TestMethod1()
+        {
+            
+            new LoggingTest().TestLoggingOutput();
+            Console.WriteLine("abc");
         }
     }
 }

@@ -8,6 +8,7 @@ namespace Jubanlabs.JubanShared.UnitTest
         public BaseFixture()
         {
             Environment.SetEnvironmentVariable("JUBAN_ENVIRONMENT_NAME", "testing");
+            
         }
 
         public void Dispose()
