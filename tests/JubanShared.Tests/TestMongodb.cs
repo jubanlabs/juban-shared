@@ -6,7 +6,6 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace Jubanlabs.JubanShared.Common.Test
 {
     using Jubanlabs.JubanShared.Mongodb.Databases;
-    using Jubanlabs.JubanShared.UnitTest;
     using MongoDB.Bson;
 
     [TestClass]

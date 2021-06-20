@@ -32,4 +32,7 @@
     <PackageReference Include="zji.lz4.core" Version="1.0.0" />
     <PackageReference Include="zji.murmurhash.core" Version="1.0.0" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="UnitTest" />
+  </ItemGroup>
 </Project>

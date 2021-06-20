@@ -8,7 +8,6 @@ namespace Jubanlabs.JubanShared.Common.Test
     using System.Collections.Generic;
     using System.IO;
     using Jubanlabs.JubanShared.Common.Config;
-    using Jubanlabs.JubanShared.UnitTest;
 
 
     [TestClass]
@@ -77,13 +76,6 @@ namespace Jubanlabs.JubanShared.Common.Test
             Assert.AreEqual("ab", AppSession.StripHostName("ab.cd.ef"));
             Assert.AreEqual("ab", AppSession.StripHostName("ab.cd"));
             Assert.AreEqual("ab", AppSession.StripHostName("ab"));
-        }
-        [TestMethod]
-        public void TestMethod1()
-        {
-            
-            new LoggingTest().TestLoggingOutput();
-            Console.WriteLine("abc");
         }
     }
 }
