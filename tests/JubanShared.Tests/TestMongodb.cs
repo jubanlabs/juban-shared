@@ -9,7 +9,7 @@ namespace Jubanlabs.JubanShared.Common.Test
     using MongoDB.Bson;
 
     [TestClass]
-    public class TestMongodb {
+    public class TestMongodb:JubanTestBase {
         private static readonly ILogger<TestMongodb> Logger =  JubanLogger.GetLogger<TestMongodb>();
 
         public TestMongodb()

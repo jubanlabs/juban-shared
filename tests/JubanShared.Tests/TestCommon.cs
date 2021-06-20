@@ -11,7 +11,7 @@ namespace Jubanlabs.JubanShared.Common.Test
 
 
     [TestClass]
-    public class TestCommon 
+    public class TestCommon :JubanTestBase
     {
         private static readonly ILogger<TestCommon> Logger =  JubanLogger.GetLogger<TestCommon>();
 
@@ -76,6 +76,16 @@ namespace Jubanlabs.JubanShared.Common.Test
             Assert.AreEqual("ab", AppSession.StripHostName("ab.cd.ef"));
             Assert.AreEqual("ab", AppSession.StripHostName("ab.cd"));
             Assert.AreEqual("ab", AppSession.StripHostName("ab"));
+        }
+
+        [TestMethod]
+        public void TestLog()
+        {
+            //ILoggerFactory loggerFactory =
+             //   LoggerFactory.Create(builder => builder.AddConsole().AddDebug().SetMinimumLevel(LogLevel.Trace));
+            //JubanLogger.SetLoggerFactory(loggerFactory);
+           
+            Logger.LogInformation("log info");
         }
     }
 }
