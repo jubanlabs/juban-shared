@@ -1,3 +1,6 @@
+using Jubanlabs.JubanShared.Logging;
+using Microsoft.Extensions.Logging;
+
 namespace Jubanlabs.JubanShared.Common.Config
 {
     using System;
@@ -7,7 +10,7 @@ namespace Jubanlabs.JubanShared.Common.Config
 
     public class AppSettings
     {
-        private static readonly NLog.Logger Logger = NLog.LogManager.GetCurrentClassLogger();
+        private static readonly ILogger<AppSettings> Logger =  JubanLogger.GetLogger<AppSettings>();
 
         private static readonly Lazy<AppSettings> LazyObj =
             new Lazy<AppSettings>(
@@ -29,7 +32,7 @@ namespace Jubanlabs.JubanShared.Common.Config
 
         private void LoadConfig()
         {
-            Logger.ConditionalTrace("loading appsettings");
+            Logger.LogTrace("loading appsettings");
             AppSession.Instance.EnvironmentVariables.TryGetValue("JUBAN_EXTRA_CONFIG_FOLDER", out string extraConfigFolder);
 
             AppSession.Instance.EnvironmentVariables.TryGetValue("JUBAN_CONFIG", out string extraConfigBlock);
@@ -41,8 +44,8 @@ namespace Jubanlabs.JubanShared.Common.Config
                 .AddJsonFile($"juban.appsettings." + AppSession.Instance.GetEnvironmentName() + ".json", true, false);
             if (extraConfigFolder != null)
             {
-                Logger.ConditionalTrace("loading extra config from " + extraConfigFolder);
-                //Logger.ConditionalTrace(File.Exists(Path.Combine(AppSession.Instance.EnvironmentVariables["JUBAN_EXTRA_CONFIG_FOLDER"], $"appsettings.json")));
+                Logger.LogTrace("loading extra config from " + extraConfigFolder);
+                //Logger.LogTrace(File.Exists(Path.Combine(AppSession.Instance.EnvironmentVariables["JUBAN_EXTRA_CONFIG_FOLDER"], $"appsettings.json")));
                 builder.AddJsonFile(Path.Combine(AppSession.Instance.EnvironmentVariables["JUBAN_EXTRA_CONFIG_FOLDER"], $"appsettings.json"), true, false)
                     .AddJsonFile(Path.Combine(AppSession.Instance.EnvironmentVariables["JUBAN_EXTRA_CONFIG_FOLDER"], $"appsettings." + AppSession.Instance.GetEnvironmentName() + ".json"), true, false)
                     .AddJsonFile(Path.Combine(AppSession.Instance.EnvironmentVariables["JUBAN_EXTRA_CONFIG_FOLDER"], $"juban.appsettings.json"), true, false)

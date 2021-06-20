@@ -1,3 +1,6 @@
+using Jubanlabs.JubanShared.Logging;
+using Microsoft.Extensions.Logging;
+
 namespace Jubanlabs.JubanShared.Common.Test
 {
     using System;
@@ -10,11 +13,11 @@ namespace Jubanlabs.JubanShared.Common.Test
 
     public class TestCommon : IClassFixture<BaseFixture>
     {
-        private static readonly NLog.Logger Logger = NLog.LogManager.GetCurrentClassLogger();
+        private static readonly ILogger<TestCommon> Logger =  JubanLogger.GetLogger<TestCommon>();
 
         public TestCommon(ITestOutputHelper outputHelper)
         {
-            LoggingHelper.BindNLog(outputHelper);
+           
             Environment.SetEnvironmentVariable("JUBAN_CONFIG", @"{
                     'key-to-be-override-env':'overrided-env',
                     'hello-testing':'word-testing'
@@ -34,7 +37,7 @@ namespace Jubanlabs.JubanShared.Common.Test
             Assert.Equal("word-testing", AppSettings.Instance.GetValue("hello-testing"));
             Assert.Equal("overrided-env", AppSettings.Instance.GetValue("key-to-be-override-env"));
             Assert.Equal("overrided-extra-folder", AppSettings.Instance.GetValue("key-to-be-override-extra-folder"));
-            Logger.ConditionalTrace("test logger");
+            Logger.LogTrace("test logger");
         }
 
         // [Fact]

@@ -1,3 +1,6 @@
+using Jubanlabs.JubanShared.Logging;
+using Microsoft.Extensions.Logging;
+
 namespace Jubanlabs.JubanShared.Common.Test
 {
     using Jubanlabs.JubanShared.Mongodb.Databases;
@@ -8,11 +11,11 @@ namespace Jubanlabs.JubanShared.Common.Test
 
     public class TestMongodb : IClassFixture<BaseFixture>
     {
-        private static readonly NLog.Logger Logger = NLog.LogManager.GetCurrentClassLogger();
+        private static readonly ILogger<TestMongodb> Logger =  JubanLogger.GetLogger<TestMongodb>();
 
         public TestMongodb(ITestOutputHelper outputHelper)
         {
-            LoggingHelper.BindNLog(outputHelper);
+            
         }
 
         [Fact]
@@ -20,7 +23,7 @@ namespace Jubanlabs.JubanShared.Common.Test
         {
             var a = TestDatabase.Instance.TestCollection;
             long count = a.CountDocuments(new BsonDocument());
-            Logger.ConditionalTrace(count);
+            Logger.LogTrace(count.ToString());
         }
 
         [Fact]
