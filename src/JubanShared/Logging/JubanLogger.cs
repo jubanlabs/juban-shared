@@ -20,7 +20,7 @@ namespace Jubanlabs.JubanShared.Logging
 
         public static ILogger GetLogger(string categoryName)
         {
-            return lf.CreateLogger(categoryName);
+            return lf == null ? NullLogger.Instance : lf.CreateLogger(categoryName);
         }
     }
 }
