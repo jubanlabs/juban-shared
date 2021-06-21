@@ -44,6 +44,9 @@ jobs:
         echo "ALPHA=alpha.$GITHUB_RUN_NUMBER" >> $GITHUB_ENV
         echo "PackConfiguration=Debug" >> $GITHUB_ENV
 
+    - name: set enviornment name 
+      run: export DOTNET_ENVIRONMENT='ci'
+      
     - name: update version & add github nuget souce
       run: |
         dotnet --version
