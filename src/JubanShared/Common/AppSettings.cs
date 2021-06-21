@@ -16,7 +16,9 @@ namespace Jubanlabs.JubanShared.Common.Config
             new Lazy<AppSettings>(
             () => new AppSettings());
 
-        private AppSettings() => this.LoadConfig();
+        private AppSettings()
+        {
+        }
 
         public static AppSettings Instance
         {
@@ -30,38 +32,9 @@ namespace Jubanlabs.JubanShared.Common.Config
             return this.Config[key];
         }
 
-        private void LoadConfig()
+        public void SetConfigRoot(IConfigurationRoot configRoot)
         {
-            Logger.LogTrace("loading appsettings");
-            AppSession.Instance.EnvironmentVariables.TryGetValue("JUBAN_EXTRA_CONFIG_FOLDER", out string extraConfigFolder);
-
-            AppSession.Instance.EnvironmentVariables.TryGetValue("JUBAN_CONFIG", out string extraConfigBlock);
-            var builder = new ConfigurationBuilder()
-                .SetBasePath(AppSession.Instance.WorkingDir)
-                .AddJsonFile($"appsettings.json", true, false)
-                .AddJsonFile($"appsettings." + AppSession.Instance.GetEnvironmentName() + ".json", true, false)
-                .AddJsonFile($"juban.appsettings.json", true, false)
-                .AddJsonFile($"juban.appsettings." + AppSession.Instance.GetEnvironmentName() + ".json", true, false);
-            if (extraConfigFolder != null)
-            {
-                Logger.LogTrace("loading extra config from " + extraConfigFolder);
-                //Logger.LogTrace(File.Exists(Path.Combine(AppSession.Instance.EnvironmentVariables["JUBAN_EXTRA_CONFIG_FOLDER"], $"appsettings.json")));
-                builder.AddJsonFile(Path.Combine(AppSession.Instance.EnvironmentVariables["JUBAN_EXTRA_CONFIG_FOLDER"], $"appsettings.json"), true, false)
-                    .AddJsonFile(Path.Combine(AppSession.Instance.EnvironmentVariables["JUBAN_EXTRA_CONFIG_FOLDER"], $"appsettings." + AppSession.Instance.GetEnvironmentName() + ".json"), true, false)
-                    .AddJsonFile(Path.Combine(AppSession.Instance.EnvironmentVariables["JUBAN_EXTRA_CONFIG_FOLDER"], $"juban.appsettings.json"), true, false)
-                    .AddJsonFile(Path.Combine(AppSession.Instance.EnvironmentVariables["JUBAN_EXTRA_CONFIG_FOLDER"], $"juban.appsettings." + AppSession.Instance.GetEnvironmentName() + ".json"), true, false);
-            }
-
-            if (extraConfigBlock != null)
-            {
-                using MemoryStream ms = new MemoryStream(Encoding.UTF8.GetBytes(extraConfigBlock));
-                builder.AddJsonStream(stream: ms);
-                this.Config = builder.Build();
-            }
-            else
-            {
-                this.Config = builder.Build();
-            }
+            this.Config = configRoot;
         }
     }
 }

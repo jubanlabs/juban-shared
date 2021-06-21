@@ -1,4 +1,6 @@
 using Jubanlabs.JubanShared.Logging;
+using JubanShared;
+using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -15,19 +17,6 @@ namespace Jubanlabs.JubanShared.Common.Test
     {
         private static readonly ILogger<TestCommon> Logger =  JubanLogger.GetLogger<TestCommon>();
 
-        public TestCommon()
-        {
-           
-            Environment.SetEnvironmentVariable("JUBAN_CONFIG", @"{
-                    'key-to-be-override-env':'overrided-env',
-                    'hello-testing':'word-testing'
-                }".Replace("'", "\"", StringComparison.Ordinal));
-            var path = Path.GetFullPath(Path.Combine(System.AppContext.BaseDirectory, "../../../extra_config_test"));
-
-            Environment.SetEnvironmentVariable("JUBAN_EXTRA_CONFIG_FOLDER", path);
-            
-        }
-
         [TestMethod]
         public void TestAppConfig()
         {
@@ -35,9 +24,21 @@ namespace Jubanlabs.JubanShared.Common.Test
             Assert.IsNull(AppSettings.Instance.GetValue("invalidkey"));
             Assert.AreEqual("overrided", AppSettings.Instance.GetValue("hello-to-be-override"));
             Assert.AreEqual("word-testing", AppSettings.Instance.GetValue("hello-testing"));
-            Assert.AreEqual("overrided-env", AppSettings.Instance.GetValue("key-to-be-override-env"));
-            Assert.AreEqual("overrided-extra-folder", AppSettings.Instance.GetValue("key-to-be-override-extra-folder"));
+            
             Logger.LogTrace("test logger");
+        }
+        
+        [TestMethod]
+        public void TestAppConfigEnvVarOverride()
+        {
+            
+            Environment.SetEnvironmentVariable("key-to-be-override-env", "overrided-env");
+            //recreate the host to validate if the config get override by env. var.
+            Host.CreateDefaultBuilder()
+                .ConfigureLogging((hostContext, loggingBuilder) => { loggingBuilder.AddConsole().AddDebug().SetMinimumLevel(LogLevel.Trace); })
+                .Build().JubanWireUp();
+            Assert.AreEqual("overrided-env", AppSettings.Instance.GetValue("key-to-be-override-env"));
+            
         }
 
         // [TestMethod]
